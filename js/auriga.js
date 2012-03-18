@@ -1,10 +1,22 @@
+/*====
+  Util
+  ====*/
+Util = {
+  extend: function(extendee, extender) {
+    for(var key in extender)
+      if(extender.hasOwnProperty(key) && typeof extendee[key] === 'undefined')
+        extendee[key] = extender[key];
+  },
+};
+
+
 /*======
   Auriga
   ======*/
 function Auriga(container_id) {
   this._config = {
-    width: 1200,
-    height: 1000,
+    container_width: 1200,
+    container_height: 1000,
     max_speed: 80,
     err_tolerance: 3,
   };
@@ -12,6 +24,7 @@ function Auriga(container_id) {
   this._initialize_shapes();
   this._initialize_canvas(container_id);
 
+  // Uncomment only one of the two following lines.
   //this._configure_mouse_follower();
   this._configure_waypoint_follower();
 
@@ -19,11 +32,11 @@ function Auriga(container_id) {
   this._stage.start();
 }
 
-
 Auriga.prototype._initialize_canvas = function(container_id) {
   this._layer = new Kinetic.Layer();
   this._layer.add(this._shape);
-  this._stage = new Kinetic.Stage(container_id, this._config.width, this._config.height);
+  this._stage = new Kinetic.Stage(container_id,
+    this._config.container_width, this._config.container_height);
   this._stage.add(this._layer);
 }
 
@@ -68,78 +81,23 @@ Auriga.prototype._configure_waypoint_follower = function() {
 
     self._shape.add_waypoint(coords, function() {
       self._layer.remove(marker);
+      self._layer.draw();
       console.log('Reached ' + coords.toString());
     });
   });
 }
 
 Auriga.prototype._initialize_shapes = function(container_id) {
-  var shape = new Kinetic.Circle({
+  var config = {
     x: 50,
     y: 50,
     fill: '#00D2FF',
     stroke: '#000000',
     strokeWidth: 1,
     radius: 50
-  });
-  shape.velocity = new Vector(0, 0);
-  shape.acceleration = new Vector(0, 0);
-
-  var config = this._config;
-
-  shape._waypoints = [];
-  shape._needs_redraw = false;
-
-  shape.move_toward = function(target_pos, on_target_reached) {
-    var current_pos = new Vector(this.x, this.y);
-    var delta = target_pos.sub(current_pos);
-    delta.y = -delta.y;
-
-    if(delta.magnitude() < config.err_tolerance) {
-      shape._needs_redraw = false;
-      if(typeof on_target_reached !== 'undefined')
-        on_target_reached();
-    } else {
-      shape._needs_redraw = true;
-    }
-
-    //console.log(delta.magnitude());
-    this.acceleration = delta;
-    this.velocity = this.velocity.add(this.acceleration);
-
-    var frame_max_speed = config.max_speed * (delta.magnitude() / config.width);
-    if(this.velocity.magnitude() > frame_max_speed)
-      this.velocity = this.velocity.normalize().mult(frame_max_speed);
-
-    this.x += this.velocity.x;
-    this.y -= this.velocity.y;
   };
-
-  shape.move_toward_next_waypoint = function() {
-    if(this._waypoints.length === 0) {
-      shape._needs_redraw = false;
-      return;
-    }
-
-    var target = this._waypoints[0];
-    this.move_toward(target.coords, target.on_waypoint_reached);
-  };
-
-  shape.needs_redraw = function() {
-    return shape._needs_redraw;
-  }
-
-  shape.add_waypoint = function(coords, on_waypoint_reached) {
-    shape._waypoints.push({
-      coords: coords,
-      on_waypoint_reached: function() {
-        shape._waypoints.shift();
-        on_waypoint_reached();
-      }
-    });
-  };
-
-  this._shape = shape;
+  Util.extend(config, this._config);
+  this._shape = new FollowingShape(config);
 }
 
 Auriga.prototype._configure_redraw = function() {
@@ -151,6 +109,74 @@ Auriga.prototype._configure_redraw = function() {
   });
 }
 
+
+/*==============
+  FollowingShape
+  ==============*/
+FollowingShape = function(config) {
+  FollowingShape.parent_type.call(this, config);
+  this._config = config;
+  this._waypoints = [];
+  this._needs_redraw = false;
+  this._velocity = new Vector(0, 0);
+  this._acceleration = new Vector(0, 0);
+}
+FollowingShape.parent_type = Kinetic.Circle;
+Util.extend(FollowingShape.prototype, FollowingShape.parent_type.prototype);
+
+FollowingShape.prototype.move_toward = function(target_pos, on_target_reached) {
+  var current_pos = new Vector(this.x, this.y);
+  var delta = target_pos.sub(current_pos);
+  delta.y = -delta.y;
+
+  if(delta.magnitude() < this._config.err_tolerance) {
+    this._needs_redraw = false;
+    if(typeof on_target_reached !== 'undefined')
+      on_target_reached.call(this);
+  } else {
+    this._needs_redraw = true;
+  }
+
+  //console.log(delta.magnitude());
+  this._acceleration = delta;
+  this._velocity = this._velocity.add(this._acceleration);
+
+  var frame_max_speed = this._config.max_speed * (delta.magnitude() / this._config.container_width);
+  if(this._velocity.magnitude() > frame_max_speed)
+    this._velocity = this._velocity.normalize().mult(frame_max_speed);
+
+  this.x += this._velocity.x;
+  this.y -= this._velocity.y;
+};
+
+FollowingShape.prototype.move_toward_next_waypoint = function() {
+  if(this._waypoints.length === 0) {
+    this._needs_redraw = false;
+    return;
+  }
+
+  var target = this._waypoints[0];
+  this.move_toward(target.coords, target.on_waypoint_reached);
+};
+
+FollowingShape.prototype.needs_redraw = function() {
+  return this._needs_redraw;
+}
+
+FollowingShape.prototype.add_waypoint = function(coords, on_waypoint_reached) {
+  this._waypoints.push({
+    coords: coords,
+    on_waypoint_reached: function() {
+      this._waypoints.shift();
+      on_waypoint_reached.call(this);
+    }
+  });
+};
+
+
+/*====================
+  Following Behaviours
+  ====================*/
 WaypointFollower = function(shape) {
   this.update = function() {
     shape.move_toward_next_waypoint();
@@ -210,5 +236,5 @@ Vector.prototype.toString = function() {
 
 
 window.addEventListener('load', function() {
-  var eb = new Auriga('container');
+  new Auriga('container');
 }, false);
