@@ -11,8 +11,10 @@ function Auriga(container_id) {
 
   this._initialize_shapes();
   this._initialize_canvas(container_id);
+
   //this._configure_mouse_follower();
-  this._configure_mouse_click();
+  this._configure_waypoint_follower();
+
   this._configure_redraw();
   this._stage.start();
 }
@@ -23,14 +25,6 @@ Auriga.prototype._initialize_canvas = function(container_id) {
   this._layer.add(this._shape);
   this._stage = new Kinetic.Stage(container_id, this._config.width, this._config.height);
   this._stage.add(this._layer);
-}
-
-Auriga.prototype._configure_mouse_follower = function() {
-  this._last_mouse_position = new Vector(this._shape.x, this._shape.y);
-  var self = this;
-  this._stage.on('mousemove', function(evt) {
-    self._last_mouse_position = self._resolve_mouse_coords(evt);
-  });
 }
 
 Auriga.prototype._resolve_mouse_coords = function(evt) {
@@ -48,7 +42,19 @@ Auriga.prototype._resolve_mouse_coords = function(evt) {
   return new Vector(x, y);
 }
 
-Auriga.prototype._configure_mouse_click = function() {
+Auriga.prototype._configure_mouse_follower = function() {
+  this._behaviour = new MouseFollower(this._shape);
+  this._behaviour.cursorLastAt(new Vector(this._shape.x, this._shape.y));
+
+  var self = this;
+  this._stage.on('mousemove', function(evt) {
+    self._behaviour.cursorLastAt(self._resolve_mouse_coords(evt));
+  });
+}
+
+Auriga.prototype._configure_waypoint_follower = function() {
+  this._behaviour = new WaypointFollower(this._shape);
+
   var self = this;
   this._stage.on('click', function(evt) {
     var coords = self._resolve_mouse_coords(evt);
@@ -81,22 +87,20 @@ Auriga.prototype._initialize_shapes = function(container_id) {
 
   var config = this._config;
 
-  shape.update_position = function() {
-    if(this._waypoints.length === 0)
-      return false;
-    var target = this._waypoints[0];
+  shape._waypoints = [];
+  shape._needs_redraw = false;
 
-    this._move_toward(target.coords, target.on_waypoint_reached);
-    return true;
-  };
-
-  shape._move_toward = function(target_pos, on_target_reached) {
+  shape.move_toward = function(target_pos, on_target_reached) {
     var current_pos = new Vector(this.x, this.y);
     var delta = target_pos.sub(current_pos);
     delta.y = -delta.y;
 
     if(delta.magnitude() < config.err_tolerance) {
-      on_target_reached();
+      shape._needs_redraw = false;
+      if(typeof on_target_reached !== 'undefined')
+        on_target_reached();
+    } else {
+      shape._needs_redraw = true;
     }
 
     //console.log(delta.magnitude());
@@ -111,7 +115,20 @@ Auriga.prototype._initialize_shapes = function(container_id) {
     this.y -= this.velocity.y;
   };
 
-  shape._waypoints = [];
+  shape.move_toward_next_waypoint = function() {
+    if(this._waypoints.length === 0) {
+      shape._needs_redraw = false;
+      return;
+    }
+
+    var target = this._waypoints[0];
+    this.move_toward(target.coords, target.on_waypoint_reached);
+  };
+
+  shape.needs_redraw = function() {
+    return shape._needs_redraw;
+  }
+
   shape.add_waypoint = function(coords, on_waypoint_reached) {
     shape._waypoints.push({
       coords: coords,
@@ -128,9 +145,27 @@ Auriga.prototype._initialize_shapes = function(container_id) {
 Auriga.prototype._configure_redraw = function() {
   var self = this;
   this._stage.onFrame(function(frame) {
-    if(self._shape.update_position.call(self._shape))
+    self._behaviour.update();
+    if(self._shape.needs_redraw())
       self._layer.draw();
   });
+}
+
+WaypointFollower = function(shape) {
+  this.update = function() {
+    shape.move_toward_next_waypoint();
+  };
+
+}
+
+MouseFollower = function(shape) {
+  this.update = function() {
+    shape.move_toward(this._lastCursorPos);
+  };
+
+  this.cursorLastAt = function(pos) {
+    this._lastCursorPos = pos;
+  }
 }
 
 
