@@ -10,6 +10,49 @@ Util = {
 };
 
 
+/*========
+  ColorGen
+  ========*/
+// See http://martin.ankerl.com/2009/12/09/how-to-create-random-colors-programmatically/.
+ColourGen = {
+  random: function() {
+    var hue = ColourGen._generate_hue();
+    var saturation = 0.5;
+    var value = 0.95;
+
+    var rgb = ColourGen._hsv_to_rgb(hue, saturation, value);
+    for(var i = 0; i < rgb.length; i++)
+      rgb[i] = Math.floor(256 * rgb[i]).toString(16);
+    return '#' + rgb.join('');
+  },
+
+  _generate_hue: function() {
+    var golden_ratio_conjugate = 0.618033988749895;
+    var hue = Math.random();
+    hue += golden_ratio_conjugate;
+    hue %= 1;
+    return hue;
+  },
+
+  _hsv_to_rgb: function(h, s, v) {
+    var h_i = Math.floor(6*h);
+    var f = 6*h - h_i;
+    var p = v*(1 - s);
+    var q = v * (1 - f*s);
+    var t = v * (1 - (1 - f) * s);
+
+    switch(h_i) {
+      case 0: return [v, t, p];
+      case 1: return [q, v, p];
+      case 2: return [p, v, t];
+      case 3: return [p, q, v];
+      case 4: return [t, p, v];
+      case 5: return [v, p, q];
+      default: return [0, 0, 0];
+    }
+  },
+};
+
 /*======
   Auriga
   ======*/
@@ -28,8 +71,38 @@ function Auriga(container_id) {
   //this._configure_mouse_follower();
   this._configure_waypoint_follower();
 
+  this._draw_image();
+
   this._configure_redraw();
   this._stage.start();
+}
+
+Auriga.prototype._draw_image = function() {
+  var img = new Image();
+  var kimg = new Kinetic.Image({
+    x: 150,
+    y: 150,
+    image: img,
+    width: 100,
+    height: 100,
+    draggable: true,
+  });
+
+  var layer = this._layer;
+  layer.add(kimg);
+  img.onload = function() {
+    layer.draw();
+  };
+
+  var svg = document.getElementById('pants');
+  var face = svg.querySelector('circle.face');
+  var xmls = new XMLSerializer();
+  window.setInterval(function() {
+    face.setAttribute('fill', ColourGen.random());
+    var svg_xml = xmls.serializeToString(svg);
+    img.src = 'data:image/svg+xml;base64,' + btoa(svg_xml);
+    console.log(img);
+  }, 500);
 }
 
 Auriga.prototype._initialize_canvas = function(container_id) {
