@@ -83,8 +83,8 @@ Auriga.prototype._draw_image = function() {
     x: 150,
     y: 150,
     image: img,
-    width: 100,
-    height: 100,
+    width: 130,
+    height: 68,
     draggable: true,
   });
 
@@ -94,15 +94,12 @@ Auriga.prototype._draw_image = function() {
     layer.draw();
   };
 
-  var svg = document.getElementById('pants');
-  var face = svg.querySelector('circle.face');
-  var xmls = new XMLSerializer();
-  window.setInterval(function() {
-    face.setAttribute('fill', ColourGen.random());
-    var svg_xml = xmls.serializeToString(svg);
-    img.src = 'data:image/svg+xml;base64,' + btoa(svg_xml);
-    console.log(img);
-  }, 500);
+  $.ajax('images/gpcr.plain.svg', {
+    dataType: 'text',
+    success: function(svg_xml) {
+      img.src = 'data:image/svg+xml;base64,' + btoa(svg_xml);
+    },
+  });
 }
 
 Auriga.prototype._initialize_canvas = function(container_id) {
