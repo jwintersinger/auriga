@@ -69,7 +69,7 @@ function Auriga(container_id) {
 
   // Uncomment only one of the two following lines.
   //this._configure_mouse_follower();
-  this._configure_waypoint_follower();
+  //this._configure_waypoint_follower();
 
   this._draw_image();
 
@@ -93,6 +93,18 @@ Auriga.prototype._draw_image = function() {
   img.onload = function() {
     layer.draw();
   };
+
+  var offset = new Vector(38, 10);
+  var ligand = new Kinetic.Circle({
+    x: offset.x + kimg.x,
+    y: offset.y + kimg.y,
+    radius: 8,
+    fill: 'red',
+    stroke: 'black',
+    strokeWidth: 1,
+    draggable: true,
+  });
+  layer.add(ligand);
 
   $.ajax('images/gpcr.plain.svg', {
     dataType: 'text',
