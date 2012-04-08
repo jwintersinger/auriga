@@ -1,0 +1,19 @@
+.container > hr {
+  margin-top: 0px;
+}
+
+.question [type=submit] {
+  margin-top: 0.7em;
+}
+
+form.create-team {
+  /*overflow: hidden;
+  background-color: #eee;*/
+}
+
+form.create-team > fieldset {
+}
+
+.carousel-inner {
+  height: 30em;
+}
