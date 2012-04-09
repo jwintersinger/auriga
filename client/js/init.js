@@ -13,12 +13,19 @@ $(function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      console.log(response);
       carousel.carousel('next');
+      setInterval(updateQuizStats, 10000);
     });
   });
-  /*$('form').submit(function(evt) {
-    evt.preventDefault();
-    carousel.carousel('next');
-  });*/
 });
+
+function updateQuizStats() {
+  $.ajax({
+    url: '/stats',
+    type: 'GET',
+  }).done(function(stats) {
+    var tmpl = $('#quiz-stats-template').html();
+    var compiled = _.template(tmpl, stats);
+    $('#quiz-stats').html(compiled);
+  });
+}

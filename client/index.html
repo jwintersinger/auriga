@@ -123,20 +123,24 @@
         </div>
 
         <div id="quiz-stats" class="span4">
-          <dl>
-            <dt>Team</dt><dd>Huge bonner</dd>
-            <dt>Rank</dt><dd>2/15</dd>
-            <dt>Progress</dt><dd>17/30</dd>
-            <dt>Score</dt><dd>1900</dd>
-          </dl>
         </div>
       </div>
     </div> <!-- /container -->
+
+    <script type="text/template" id="quiz-stats-template">
+      <dl>
+        <dt>Team</dt><dd><%- team_name %></dd>
+        <dt>Rank</dt><dd>2/15</dd>
+        <dt>Progress</dt><dd>17/30</dd>
+        <dt>Score</dt><dd>1900</dd>
+      </dl>
+    </script>
 
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script src="js/underscore-min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/init.js"></script>
   </body>

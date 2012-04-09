@@ -33,7 +33,7 @@ app.get('/questions', routes.listQuestions);
 app.post('/questions/load', routes.loadQuestions);
 app.post('/questions/:id([0-9]+)', routes.answerQuestion);
 
-app.get('/stats', routes.fetchStats);
+app.get('/stats', routes.listStats);
 app.post('/team', routes.createTeam);
 
 // This route isn't strictly necessary, as Express' static-file-handling code
