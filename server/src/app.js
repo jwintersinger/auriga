@@ -29,7 +29,7 @@ app.configure('production', function(){
 /*======
   Routes
   ======*/
-app.get('/questions', routes.fetchQuestions);
+app.get('/questions', routes.listQuestions);
 app.post('/questions/load', routes.loadQuestions);
 app.post('/questions/:id([0-9]+)', routes.answerQuestion);
 

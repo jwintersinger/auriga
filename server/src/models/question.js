@@ -18,7 +18,11 @@ Question._deleteAll = function() {
   });
 };
 
-Question.list = function() {
+Question.list = function(onResult) {
+  Question._queries.list.all(function(err, rows) {
+    errHandler(err);
+    onResult(rows);
+  });
 };
 
 Question.loadFromJson = function() {
