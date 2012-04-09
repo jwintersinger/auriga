@@ -17,11 +17,12 @@ CREATE TABLE questions (
 
 CREATE TABLE sessions (
   team_id INTEGER NOT NULL,
-  token TEXT NOT NULL
+  token TEXT NOT NULL,
+  created_at INTEGER NOT NULL
 );
 
 CREATE TABLE teams (
   id INTEGER PRIMARY KEY,
-  created_at INTEGER NOT NULL,
-  name TEXT NOT NULL
+  name TEXT NOT NULL,
+  created_at INTEGER NOT NULL
 );

@@ -18,3 +18,4 @@ function dbCleanup() {
 exports.Question = require('./question').Question;
 exports.Session = require('./session').Session;
 exports.Stats = require('./stats').Stats;
+exports.Team = require('./team').Team;
