@@ -1,0 +1,35 @@
+[
+  {
+    "body": "Why are bonners huge?",
+    "weight": 200,
+    "answers": [
+      {
+        "correct": true,
+        "body": "Roffles for everyone"
+      },
+      {
+        "correct": false,
+        "body": "Roffles for everyone"
+      }
+    ]
+  },
+
+  {
+    "body": "What do you wear on your feet?",
+    "weight": 400,
+    "answers": [
+      {
+        "correct": false,
+        "body": "Sandals"
+      },
+      {
+        "correct": false,
+        "body": "Socks"
+      },
+      {
+        "correct": true,
+        "body": "Bananas"
+      }
+    ]
+  }
+]

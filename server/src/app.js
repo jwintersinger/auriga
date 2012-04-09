@@ -30,6 +30,7 @@ app.configure('production', function(){
   Routes
   ======*/
 app.get('/questions', routes.fetchQuestions);
+app.post('/questions/load', routes.loadQuestions);
 app.post('/questions/:id([0-9]+)', routes.answerQuestion);
 
 app.get('/stats', routes.fetchStats);
