@@ -21,7 +21,21 @@ Question._deleteAll = function() {
 Question.list = function(onResult) {
   Question._queries.list.all(function(err, rows) {
     errHandler(err);
-    onResult(rows);
+
+    var questions = {};
+    rows.forEach(function(row) {
+      if(!(row.id in questions))
+        questions[row.id] = { body: row.body, answers: [] };
+      questions[row.id].answers.push(row.answer_body);
+    });
+
+    var questionList = [];
+    for(var qid in questions) {
+      var question = questions[qid];
+      question.id = qid;
+      questionList.push(question);
+    }
+    onResult(questionList);
   });
 };
 

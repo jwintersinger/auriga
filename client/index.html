@@ -40,11 +40,10 @@
     </div>
 
     <div class="container">
-
       <div class="row">
         <div id="primaryCarousel" class="carousel span8">
           <div class="carousel-inner">
-            <div class="scoreboard item">
+            <!--<div class="scoreboard item">
               <h1>Scoreboard</h1>
               <hr />
 
@@ -53,7 +52,7 @@
                 <li>Socks</li>
                 <li>Weiners</li>
               </ol>
-            </div>
+            </div>-->
 
             <div class="team-entry item active">
               <h1>Team creation</h1>
@@ -77,47 +76,6 @@
             </div>
 
             <div class="question item" style="min-height: 300px">
-              <h1>Question</h1>
-              <hr />
-
-              <form class="form-vertical">
-                <fieldset>
-                  <legend>Why are my pants so awesome?</legend>
-
-                  <!--<div class="control-group">
-                    <label class="control-label">Question</label>
-                    <div class="controls">
-                      <p class="helpblock">Why are my pants so awesome?</p>
-                    </div>
-                  </div>-->
-
-                  <div class="control-group">
-                    <!--<label class="control-label" for="answer1">Answers</label>-->
-                    <div class="controls">
-                      <label class="radio">
-                        <input type="radio" value="Pants" id="answer1" />
-                        Le pants.
-                      </label>
-                      <label class="radio">
-                        <input type="radio" value="Pants" id="answer1" />
-                        Le pants.
-                      </label>
-                      <label class="radio">
-                        <input type="radio" value="Pants" id="answer1" />
-                        Le pants.
-                      </label>
-                      <label class="radio">
-                        <input type="radio" value="Pants" id="answer1" />
-                        Le pants.
-                      </label>
-                    </div>
-                  </div>
-
-                  <div class="control-group">
-                    <button type="submit" class="btn btn-primary">Submit answer</button>
-                  </div>
-                </fieldset>
-              </form>
             </div>
           </div>
         </div>
@@ -129,18 +87,62 @@
 
     <script type="text/template" id="quiz-stats-template">
       <dl>
-        <dt>Team</dt><dd><%- team_name %></dd>
+        <dt>Team</dt><dd><%= team_name %></dd>
         <dt>Rank</dt><dd>2/15</dd>
         <dt>Progress</dt><dd>17/30</dd>
         <dt>Score</dt><dd>1900</dd>
       </dl>
     </script>
 
+    <script type="text/template" id="quiz-question-template">
+      <h1>Question</h1>
+      <hr />
+
+      <form class="form-vertical">
+        <fieldset>
+          <legend>Why are my pants so awesome?</legend>
+
+          <!--<div class="control-group">
+            <label class="control-label">Question</label>
+            <div class="controls">
+              <p class="helpblock">Why are my pants so awesome?</p>
+            </div>
+          </div>-->
+
+          <div class="control-group">
+            <!--<label class="control-label" for="answer1">Answers</label>-->
+            <div class="controls">
+              <label class="radio">
+                <input type="radio" value="Pants" id="answer1" />
+                Le pants.
+              </label>
+              <label class="radio">
+                <input type="radio" value="Pants" id="answer1" />
+                Le pants.
+              </label>
+              <label class="radio">
+                <input type="radio" value="Pants" id="answer1" />
+                Le pants.
+              </label>
+              <label class="radio">
+                <input type="radio" value="Pants" id="answer1" />
+                Le pants.
+              </label>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <button type="submit" class="btn btn-primary">Submit answer</button>
+          </div>
+        </fieldset>
+      </form>
+    </script>
+
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
-    <script src="js/underscore-min.js"></script>
+    <script src="js/ejs.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/init.js"></script>
   </body>

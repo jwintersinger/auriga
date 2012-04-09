@@ -1,3 +1,5 @@
+var ejs = require('ejs');
+
 $(function() {
   var carousel = $('.carousel');
   carousel.carousel({
@@ -13,9 +15,23 @@ $(function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      carousel.carousel('next');
-      setInterval(updateQuizStats, 10000);
+      setInterval(updateQuizStats, 1000);
+
+      $.ajax({
+        url: '/questions',
+        type: 'GET'
+      }).done(function(questions) {
+        var question = questions[0];
+        var compiled = $('#quiz-question-template').html();
+        $('#primaryCarousel .question').html(compiled);
+        carousel.carousel('next');
+      });
     });
+  });
+
+  $(document).on('submit', '#primaryCarousel .question form', function(evt) {
+    evt.preventDefault();
+    console.log('Question submitted');
   });
 });
 
@@ -25,7 +41,7 @@ function updateQuizStats() {
     type: 'GET',
   }).done(function(stats) {
     var tmpl = $('#quiz-stats-template').html();
-    var compiled = _.template(tmpl, stats);
+    var compiled = ejs.render(tmpl, stats);
     $('#quiz-stats').html(compiled);
   });
 }
