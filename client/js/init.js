@@ -17,7 +17,7 @@ Util = {
 function Notifier(container) {
   this._container = $(container);
   this._autoCloseDelay = 3000;
-  this._fadeInDuration = 500;
+  this._fadeInDuration = 250;
 }
 
 Notifier.prototype.notify = function(msg, additionalClasses) {
@@ -75,11 +75,21 @@ QuestionLoader.prototype._loadQuestions = function() {
 
 QuestionLoader.prototype._configureTeamCreation = function() {
   var createTeamForm = $('form.create-team');
-  createTeamForm.find('[name=teamName]').focus();
+  var teamNameInput = createTeamForm.find('[name=teamName]');
+  teamNameInput.focus();
 
   var self = this;
   createTeamForm.submit(function(evt) {
     evt.preventDefault();
+
+    var teamName = teamNameInput.val();
+    if(/^\s*$/.test(teamName)) {
+      self._notifier.failure('Please enter a team name.');
+      teamNameInput.val('');
+      teamNameInput.focus();
+      return;
+    }
+
     $.ajax({
       url: '/team',
       type: 'POST',
@@ -95,8 +105,13 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
   var self = this;
   $(document).on('submit', '#primaryCarousel .question form', function(evt) {
     evt.preventDefault();
-
     var form = $(this);
+
+    if(form.find(':radio[name=answer]:checked').length === 0) {
+      self._notifier.failure('Please select an answer.');
+      return;
+    }
+
     var questionId = form.find('[name=question_id]').val();
     $.ajax({
       url: '/questions/' + questionId,
