@@ -19,8 +19,8 @@ Question._deleteAll = function() {
   });
 };
 
-Question.list = function(onResult) {
-  Question._queries.listQuestions.all(function(err, rows) {
+Question.list = function(teamId, onResult) {
+  Question._queries.listQuestions.all(teamId, function(err, rows) {
     errHandler(err);
 
     var questions = {};
@@ -85,7 +85,9 @@ Question._queries = {
   listQuestions: db.prepare(
     'SELECT q.*, a.id AS answer_id, a.body AS answer_body ' +
     'FROM questions AS q ' +
-    'INNER JOIN answers AS a ON a.question_id = q.id'
+    'INNER JOIN answers AS a ON a.question_id = q.id ' +
+    'LEFT OUTER JOIN answered_questions AS aq ON aq.question_id = q.id AND aq.team_id = ? ' +
+    'WHERE aq.question_id IS NULL'
   ),
   insertQuestion: db.prepare('INSERT INTO questions (body, points) VALUES (?, ?)'),
   insertAnswer: db.prepare('INSERT INTO answers (question_id, body, correct) VALUES (?, ?, ?)'),

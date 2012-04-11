@@ -2,8 +2,10 @@ var models = require('../models');
 var util = require('./util');
 
 exports.listQuestions = function(req, res) {
-  models.Question.list(function(questionList) {
-    res.json(questionList);
+  util.auth(req, res, function(team) {
+    models.Question.list(team.team_id, function(questionList) {
+      res.json(questionList);
+    });
   });
 };
 
