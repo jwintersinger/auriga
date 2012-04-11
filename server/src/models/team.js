@@ -17,5 +17,21 @@ Team.create = function(teamName, onCreated) {
 };
 
 Team._queries = {
-  create: db.prepare("INSERT INTO teams (name, created_at) VALUES (?, strftime('%s', 'now'))")
+  create: db.prepare("INSERT INTO teams (name, created_at) VALUES (?, strftime('%s', 'now'))"),
+  auth: db.prepare('SELECT t.name AS team_name, t.id AS team_id FROM teams AS t ' +
+                      'INNER JOIN sessions AS s ON s.team_id = t.id ' +
+                      'WHERE s.token = ?')
+};
+
+Team.auth = function(sessionToken, onValid, onInvalid) {
+  Team._queries.auth.get(sessionToken, function(err, row) {
+    errHandler(err);
+    if(typeof row === 'undefined') {
+      if(typeof onInvalid !== 'undefined')
+        onInvalid();
+    } else {
+      if(typeof onValid !== 'undefined')
+        onValid(row);
+    }
+  });
 };

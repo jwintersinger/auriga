@@ -45,3 +45,7 @@ form.create-team > fieldset {
 .modal {
   display: none;
 }
+
+#changeTeamPrompt .teamName {
+  font-weight: bold;
+}

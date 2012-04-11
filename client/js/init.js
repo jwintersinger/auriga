@@ -154,9 +154,9 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
       data: form.serialize()
     }).done(function(response) {
       if(response.status === 'correct')
-        self._notifier.success('Good show, mate!');
+        self._notifier.success("You're correct! Good show, my friend!");
       else if(response.status === 'incorrect')
-        self._notifier.failure('Oh, dear.');
+        self._notifier.failure("I'm terribly sorry, dear, but you're incorrect.");
     });
     self._advanceToNextQuestion();
   });

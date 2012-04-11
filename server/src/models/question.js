@@ -59,6 +59,10 @@ Question.loadFromJson = function() {
   });
 };
 
+Question.answer = function(questionId, AnswerId, teamId) {
+
+};
+
 Question._queries = {
   list: db.prepare('SELECT q.*, a.id AS answer_id, a.body AS answer_body ' +
                    'FROM questions AS q ' +
