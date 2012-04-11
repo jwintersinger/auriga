@@ -13,6 +13,8 @@ exports.answerQuestion = function(req, res) {
       res.json({ status: 'correct' });
     }, function() {
       res.json({ status: 'incorrect' });
+    }, function() {
+      res.json({ status: 'already_answered' });
     });
   });
 };

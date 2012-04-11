@@ -78,16 +78,19 @@ QuestionLoader.prototype._promptForExistingTeam = function() {
       return;
 
     var dialog = $('#changeTeamPrompt');
+    var stayOnTeam = dialog.find('.stay-on-team');
+    var changeTeam = dialog.find('.change-team');
     dialog.find('.teamName').html(teamName);
-    dialog.find('.stay-on-team').click(function() {
+    stayOnTeam.click(function() {
       self._configureStatsUpdater();
       self._advanceToNextQuestion();
       dialog.modal('hide');
     });
-    dialog.find('.change-team').click(function() {
+    changeTeam.click(function() {
       dialog.modal('hide');
     });
     dialog.modal('show');
+    stayOnTeam.focus();
   });
 };
 
@@ -157,6 +160,8 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
         self._notifier.success("You're correct! Good show, my friend!");
       else if(response.status === 'incorrect')
         self._notifier.failure("I'm terribly sorry, dear, but you're incorrect.");
+      else if(response.status === 'already_answered')
+        self._notifier.failure('You already tried to answer that question, you jerk.');
     });
     self._advanceToNextQuestion();
   });

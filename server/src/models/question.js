@@ -59,19 +59,25 @@ Question.loadFromJson = function() {
   });
 };
 
-Question.answer = function(questionId, answerId, teamId, onCorrect, onIncorrect) {
-  // Insert into answeredQuestions
-  // Increment score
-  // Respond with answer
-
-  Question._queries.testAnswer.get(questionId, answerId, questionId, function(err, row) {
-    errHandler(err);
-    if(typeof row === 'undefined') {
-      onIncorrect();
-    } else {
-      onCorrect();
-      models.Team.updateScore(teamId, row.points);
+Question.answer = function(questionId, answerId, teamId, onCorrect, onIncorrect, onAlreadyAnswered) {
+  Question._queries.determineIfAlreadyAnswered.get(questionId, teamId, function(err, row) {
+    if(typeof row !== 'undefined') {
+      onAlreadyAnswered();
+      return;
     }
+
+    Question._queries.testAnswer.get(questionId, answerId, questionId, function(err, row) {
+      errHandler(err);
+      Question._queries.markQuestionAsAnswered.run(questionId, teamId, function(err) {
+        errHandler(err);
+        if(typeof row === 'undefined') {
+          onIncorrect();
+        } else {
+          onCorrect();
+          models.Team.updateScore(teamId, row.points);
+        }
+      });
+    });
   });
 };
 
@@ -86,5 +92,9 @@ Question._queries = {
   deleteAnsweredQuestions: db.prepare('DELETE FROM answered_questions'),
   testAnswer: db.prepare('SELECT q.points FROM answers AS a ' +
                          'INNER JOIN questions AS q ON q.id == ? ' +
-                         'WHERE a.id == ? AND a.question_id == ? AND a.correct == 1')
+                         'WHERE a.id == ? AND a.question_id == ? AND a.correct == 1'),
+  markQuestionAsAnswered: db.prepare('INSERT INTO answered_questions (question_id, team_id) ' +
+                                     'VALUES (?, ?)'),
+  determineIfAlreadyAnswered: db.prepare('SELECT question_id FROM answered_questions ' +
+                                         'WHERE question_id == ? AND team_id == ?')
 };
