@@ -51,16 +51,25 @@ Question.loadFromJson = function() {
     Question._queries.insertQuestion.run(question.body, function() {
       var questionId = this.lastID;
       question.answers.forEach(function(answer) {
-        Question._queries.insertAnswer.run(questionId, answer.body, answer.correct, function() {
-        });
+        Question._queries.insertAnswer.run(questionId, answer.body, answer.correct, errHandler);
       });
     });
 
   });
 };
 
-Question.answer = function(questionId, AnswerId, teamId) {
+Question.answer = function(questionId, answerId, teamId, onCorrect, onIncorrect) {
+  // Insert into answeredQuestions
+  // Increment score
+  // Respond with answer
 
+  Question._queries.testAnswer.get(answerId, questionId, function(err, row) {
+    errHandler(err);
+    if(typeof row === 'undefined')
+      onIncorrect();
+    else
+      onCorrect();
+  });
 };
 
 Question._queries = {
@@ -72,4 +81,6 @@ Question._queries = {
   deleteQuestions: db.prepare('DELETE FROM questions'),
   deleteAnswers: db.prepare('DELETE FROM answers'),
   deleteAnsweredQuestions: db.prepare('DELETE FROM answered_questions'),
+  testAnswer: db.prepare('SELECT id FROM answers ' +
+                         'WHERE id == ? AND question_id == ? AND correct == 1')
 };

@@ -142,7 +142,7 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
     evt.preventDefault();
     var form = $(this);
 
-    if(form.find(':radio[name=answer]:checked').length === 0) {
+    if(form.find(':radio[name=answer_id]:checked').length === 0) {
       self._notifier.failure('Please select an answer.');
       return;
     }

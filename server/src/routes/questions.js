@@ -1,4 +1,5 @@
 var models = require('../models');
+var util = require('./util');
 
 exports.listQuestions = function(req, res) {
   models.Question.list(function(questionList) {
@@ -7,7 +8,13 @@ exports.listQuestions = function(req, res) {
 };
 
 exports.answerQuestion = function(req, res) {
-  res.json({ status: 'incorrect' });
+  util.auth(req, res, function(team) {
+    models.Question.answer(req.body.question_id, req.body.answer_id, team.team_id, function() {
+      res.json({ status: 'correct' });
+    }, function() {
+      res.json({ status: 'incorrect' });
+    });
+  });
 };
 
 exports.loadQuestions = function(req, res) {
