@@ -75,8 +75,6 @@
               </form>
             </div>
 
-            <div class="question item" style="min-height: 300px">
-            </div>
           </div>
         </div>
 
@@ -95,47 +93,39 @@
     </script>
 
     <script type="text/template" id="quiz-question-template">
-      <h1>Question</h1>
-      <hr />
+      <div class="question item" style="min-height: 300px">
+        <h1>Question</h1>
+        <hr />
 
-      <form class="form-vertical">
-        <fieldset>
-          <legend>Why are my pants so awesome?</legend>
+        <form class="form-vertical">
+          <fieldset>
+            <legend><%= body %></legend>
 
-          <!--<div class="control-group">
-            <label class="control-label">Question</label>
-            <div class="controls">
-              <p class="helpblock">Why are my pants so awesome?</p>
+            <!--<div class="control-group">
+              <label class="control-label">Question</label>
+              <div class="controls">
+                <p class="helpblock">Why are my pants so awesome?</p>
+              </div>
+            </div>-->
+
+            <div class="control-group">
+              <!--<label class="control-label" for="answer1">Answers</label>-->
+              <div class="controls">
+              <% answers.forEach(function(answer) { %>
+                <label class="radio">
+                  <input type="radio" value="Pants" id="answer1" />
+                  <%= answer %>
+                </label>
+              <% }) %>
+              </div>
             </div>
-          </div>-->
 
-          <div class="control-group">
-            <!--<label class="control-label" for="answer1">Answers</label>-->
-            <div class="controls">
-              <label class="radio">
-                <input type="radio" value="Pants" id="answer1" />
-                Le pants.
-              </label>
-              <label class="radio">
-                <input type="radio" value="Pants" id="answer1" />
-                Le pants.
-              </label>
-              <label class="radio">
-                <input type="radio" value="Pants" id="answer1" />
-                Le pants.
-              </label>
-              <label class="radio">
-                <input type="radio" value="Pants" id="answer1" />
-                Le pants.
-              </label>
+            <div class="control-group">
+              <button type="submit" class="btn btn-primary">Submit answer</button>
             </div>
-          </div>
-
-          <div class="control-group">
-            <button type="submit" class="btn btn-primary">Submit answer</button>
-          </div>
-        </fieldset>
-      </form>
+          </fieldset>
+        </form>
+      </div>
     </script>
 
     <!-- Le javascript

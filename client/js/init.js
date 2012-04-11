@@ -1,13 +1,32 @@
 var ejs = require('ejs');
 
-$(function() {
-  var carousel = $('.carousel');
-  carousel.carousel({
-    interval: 6*3600*1000
+function QuestionLoader(carousel) {
+  this._carousel = carousel;
+  this._carousel.carousel({
+    interval: 6*3600*1000 // 6 hours -- ugly hack.
   });
+  this._configureTeamCreation();
+  this._configureQuestionSubmission();
 
+  this._loadQuestions();
+  this._advanceToNextQuestion();
+}
+
+QuestionLoader.prototype._loadQuestions = function() {
+  var self = this;
+  $.ajax({
+    url: '/questions',
+    type: 'GET'
+  }).done(function(questions) {
+    self._questions = questions;
+  });
+};
+
+QuestionLoader.prototype._configureTeamCreation = function() {
   var createTeamForm = $('form.create-team');
   createTeamForm.find('[name=teamName]').focus();
+
+  var self = this;
   createTeamForm.submit(function(evt) {
     evt.preventDefault();
     $.ajax({
@@ -15,27 +34,23 @@ $(function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      setInterval(updateQuizStats, 1000);
-
-      $.ajax({
-        url: '/questions',
-        type: 'GET'
-      }).done(function(questions) {
-        var question = questions[0];
-        var compiled = $('#quiz-question-template').html();
-        $('#primaryCarousel .question').html(compiled);
-        carousel.carousel('next');
-      });
+      setInterval(function() {
+        self._updateQuizStats();
+      }, 1000);
+      self._advanceToNextQuestion();
     });
   });
+}
 
+QuestionLoader.prototype._configureQuestionSubmission = function() {
+  var self = this;
   $(document).on('submit', '#primaryCarousel .question form', function(evt) {
     evt.preventDefault();
-    console.log('Question submitted');
+    self._advanceToNextQuestion();
   });
-});
+};
 
-function updateQuizStats() {
+QuestionLoader.prototype._updateQuizStats = function() {
   $.ajax({
     url: '/stats',
     type: 'GET',
@@ -45,3 +60,24 @@ function updateQuizStats() {
     $('#quiz-stats').html(compiled);
   });
 }
+
+QuestionLoader.prototype._advanceToNextQuestion = function() {
+  var self = this;
+  if(typeof self._questions === 'undefined') {
+    setTimeout(function() {
+      self._advanceToNextQuestion();
+    }, 1);
+    return;
+  }
+
+  var question = this._questions.shift();
+  var tmpl = $('#quiz-question-template').html();
+  var compiled = ejs.render(tmpl, question);
+  this._carousel.find('.carousel-inner').append(compiled);
+  this._carousel.carousel('next');
+}
+
+$(function() {
+  var carousel = $('.carousel');
+  var ql = new QuestionLoader(carousel);
+});
