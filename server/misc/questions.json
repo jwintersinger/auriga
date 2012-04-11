@@ -1,7 +1,7 @@
 [
   {
     "body": "Why are bonners huge?",
-    "weight": 200,
+    "points": 200,
     "answers": [
       {
         "correct": true,
@@ -16,7 +16,7 @@
 
   {
     "body": "What do you wear on your feet?",
-    "weight": 400,
+    "points": 400,
     "answers": [
       {
         "correct": false,

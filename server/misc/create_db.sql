@@ -12,7 +12,8 @@ CREATE TABLE answers (
 
 CREATE TABLE questions (
   id INTEGER PRIMARY KEY,
-  body TEXT NOT NULL
+  body TEXT NOT NULL,
+  points INTEGER NOT NULL
 );
 
 CREATE TABLE sessions (
