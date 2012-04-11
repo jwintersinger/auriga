@@ -94,8 +94,8 @@ Question._queries = {
   deleteAnsweredQuestions: db.prepare('DELETE FROM answered_questions'),
   testAnswer: db.prepare(
     'SELECT q.points FROM answers AS a ' +
-    'INNER JOIN questions AS q ON q.id == ? ' +
-    'WHERE a.id == ? AND a.question_id == ? AND a.correct == 1'
+    'INNER JOIN questions AS q ON q.id = ? ' +
+    'WHERE a.id = ? AND a.question_id = ? AND a.correct = 1'
   ),
   markQuestionAsAnswered: db.prepare(
     'INSERT INTO answered_questions (question_id, team_id) ' +
@@ -103,6 +103,6 @@ Question._queries = {
   ),
   determineIfAlreadyAnswered: db.prepare(
     'SELECT question_id FROM answered_questions ' +
-    'WHERE question_id == ? AND team_id == ?'
+    'WHERE question_id = ? AND team_id = ?'
   )
 };
