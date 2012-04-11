@@ -54,36 +54,40 @@ function QuestionLoader(carousel) {
   this._carousel = carousel;
   this._notifier = new Notifier('#notifications');
 
-  this._loadQuestions();
-
   this._carousel.carousel({
     interval: 6*3600*1000 // 6 hours -- ugly hack.
   });
   this._configureTeamCreation();
   this._configureAnswerSubmission();
-  this._promptForExistingTeam();
+
+  var self = this;
+  this._checkForExistingTeam(function() { self._onTeamChanged(); });
 }
 
-QuestionLoader.prototype._promptForExistingTeam = function() {
+QuestionLoader.prototype._onTeamChanged = function() {
+  this._loadQuestions();
+  this._configureStatsUpdater();
+  this._advanceToNextQuestion();
+};
+
+QuestionLoader.prototype._checkForExistingTeam = function(onUserStaysOnSameTeam) {
   // User hasn't previously joined team.
   if(document.cookie.indexOf('sessionToken') === -1)
     return;
 
-
-  var self = this;
   this._getStats(function(stats) {
     var teamName = stats.team_name;
-    // If teamName is undefined, client has invalid sessionToken cookie.
+    // If teamName is undefined, client has invalid sessionToken cookie. 
     if(typeof teamName === 'undefined')
       return;
 
+    // User is already on valid team.
     var dialog = $('#changeTeamPrompt');
     var stayOnTeam = dialog.find('.stay-on-team');
     var changeTeam = dialog.find('.change-team');
     dialog.find('.teamName').html(teamName);
     stayOnTeam.click(function() {
-      self._configureStatsUpdater();
-      self._advanceToNextQuestion();
+      onUserStaysOnSameTeam();
       dialog.modal('hide');
     });
     changeTeam.click(function() {
@@ -133,8 +137,7 @@ QuestionLoader.prototype._configureTeamCreation = function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      self._configureStatsUpdater();
-      self._advanceToNextQuestion();
+      self._onTeamChanged();
     });
   });
 }
