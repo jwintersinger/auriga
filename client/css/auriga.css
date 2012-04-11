@@ -17,3 +17,7 @@ form.create-team > fieldset {
 .carousel-inner {
   height: 30em;
 }
+
+.carousel .item {
+  min-height: 300px;
+}

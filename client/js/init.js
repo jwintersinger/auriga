@@ -70,9 +70,14 @@ QuestionLoader.prototype._advanceToNextQuestion = function() {
     return;
   }
 
-  var question = this._questions.shift();
-  var tmpl = $('#quiz-question-template').html();
-  var compiled = ejs.render(tmpl, question);
+  if(this._questions.length > 0) {
+    var question = this._questions.shift();
+    var tmpl = $('#quiz-question-template').html();
+    var compiled = ejs.render(tmpl, question);
+  } else {
+    var compiled = $('#all-questions-answered-template').html();
+  }
+
   this._carousel.find('.carousel-inner').append(compiled);
   this._carousel.carousel('next');
 }
