@@ -113,8 +113,8 @@
               <div class="controls">
               <% answers.forEach(function(answer) { %>
                 <label class="radio">
-                  <input type="radio" value="Pants" id="answer1" />
-                  <%= answer %>
+                  <input type="radio" name="answer" value="<%= answer.id %>" />
+                  <%= answer.body %>
                 </label>
               <% }) %>
               </div>

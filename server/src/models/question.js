@@ -26,7 +26,10 @@ Question.list = function(onResult) {
     rows.forEach(function(row) {
       if(!(row.id in questions))
         questions[row.id] = { body: row.body, answers: [] };
-      questions[row.id].answers.push(row.answer_body);
+      questions[row.id].answers.push({
+        id: row.answer_id,
+        body: row.answer_body
+      });
     });
 
     var questionList = [];
@@ -57,7 +60,7 @@ Question.loadFromJson = function() {
 };
 
 Question._queries = {
-  list: db.prepare('SELECT q.*, a.body AS answer_body ' +
+  list: db.prepare('SELECT q.*, a.id AS answer_id, a.body AS answer_body ' +
                    'FROM questions AS q ' +
                    'INNER JOIN answers AS a ON a.question_id = q.id'),
   insertQuestion: db.prepare('INSERT INTO questions (body) VALUES (?)'),
