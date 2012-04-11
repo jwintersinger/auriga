@@ -1,5 +1,12 @@
 var ejs = require('ejs');
 
+Util = {
+  executeNowAndPeriodically: function(func, period) {
+    func();
+    setInterval(func, period);
+  }
+};
+
 function QuestionLoader(carousel) {
   this._carousel = carousel;
   this._carousel.carousel({
@@ -9,7 +16,6 @@ function QuestionLoader(carousel) {
   this._configureQuestionSubmission();
 
   this._loadQuestions();
-  this._advanceToNextQuestion();
 }
 
 QuestionLoader.prototype._loadQuestions = function() {
@@ -34,9 +40,7 @@ QuestionLoader.prototype._configureTeamCreation = function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      setInterval(function() {
-        self._updateQuizStats();
-      }, 1000);
+      Util.executeNowAndPeriodically(self._updateQuizStats, 1000);
       self._advanceToNextQuestion();
     });
   });
