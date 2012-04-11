@@ -54,14 +54,42 @@ function QuestionLoader(carousel) {
   this._carousel = carousel;
   this._notifier = new Notifier('#notifications');
 
+  this._loadQuestions();
+
   this._carousel.carousel({
     interval: 6*3600*1000 // 6 hours -- ugly hack.
   });
   this._configureTeamCreation();
   this._configureAnswerSubmission();
-
-  this._loadQuestions();
+  this._promptForExistingTeam();
 }
+
+QuestionLoader.prototype._promptForExistingTeam = function() {
+  // User hasn't previously joined team.
+  if(document.cookie.indexOf('sessionToken') === -1)
+    return;
+
+
+  var self = this;
+  this._getStats(function(stats) {
+    var teamName = stats.team_name;
+    // If teamName is undefined, client has invalid sessionToken cookie.
+    if(typeof teamName === 'undefined')
+      return;
+
+    var dialog = $('#changeTeamPrompt');
+    dialog.find('.teamName').html(teamName);
+    dialog.find('.stay-on-team').click(function() {
+      self._configureStatsUpdater();
+      self._advanceToNextQuestion();
+      dialog.modal('hide');
+    });
+    dialog.find('.change-team').click(function() {
+      dialog.modal('hide');
+    });
+    dialog.modal('show');
+  });
+};
 
 QuestionLoader.prototype._loadQuestions = function() {
   var self = this;
@@ -71,6 +99,13 @@ QuestionLoader.prototype._loadQuestions = function() {
   }).done(function(questions) {
     self._questions = questions;
   });
+};
+
+QuestionLoader.prototype._configureStatsUpdater = function() {
+  var self = this;
+  Util.executeNowAndPeriodically(function() {
+    self._updateQuizStats();
+  }, 1000);
 };
 
 QuestionLoader.prototype._configureTeamCreation = function() {
@@ -95,7 +130,7 @@ QuestionLoader.prototype._configureTeamCreation = function() {
       type: 'POST',
       data: $(this).serialize()
     }).done(function(response) {
-      Util.executeNowAndPeriodically(self._updateQuizStats, 1000);
+      self._configureStatsUpdater();
       self._advanceToNextQuestion();
     });
   });
@@ -127,11 +162,15 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
   });
 };
 
-QuestionLoader.prototype._updateQuizStats = function() {
+QuestionLoader.prototype._getStats = function(onResult) {
   $.ajax({
     url: '/stats',
     type: 'GET',
-  }).done(function(stats) {
+  }).done(onResult);
+};
+
+QuestionLoader.prototype._updateQuizStats = function() {
+  this._getStats(function(stats) {
     var tmpl = $('#quiz-stats-template').html();
     var compiled = ejs.render(tmpl, stats);
     $('#quiz-stats').html(compiled);

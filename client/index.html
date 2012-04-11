@@ -86,6 +86,20 @@
       </div>
     </div> <!-- /container -->
 
+    <div class="modal" id="changeTeamPrompt">
+      <div class="modal-header">
+        <a class="close" data-dismiss="modal">×</a>
+        <h3>Change team?</h3>
+      </div>
+      <div class="modal-body">
+        <p>You are already a member of team <span class="teamName"></span>. Do you wish to remain on it?</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn change-team">Change teams</a>
+        <a href="#" class="btn btn-primary stay-on-team">Stay on this team</a>
+      </div>
+    </div>
+
     <script type="text/template" id="quiz-stats-template">
       <dl>
         <dt>Team</dt><dd><%= team_name %></dd>
