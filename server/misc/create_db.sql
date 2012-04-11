@@ -25,5 +25,6 @@ CREATE TABLE sessions (
 CREATE TABLE teams (
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL,
-  created_at INTEGER NOT NULL
+  created_at INTEGER NOT NULL,
+  score INTEGER NOT NULL DEFAULT 0
 );

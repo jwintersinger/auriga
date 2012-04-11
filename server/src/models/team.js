@@ -18,9 +18,11 @@ Team.create = function(teamName, onCreated) {
 
 Team._queries = {
   create: db.prepare("INSERT INTO teams (name, created_at) VALUES (?, strftime('%s', 'now'))"),
-  auth: db.prepare('SELECT t.name AS team_name, t.id AS team_id FROM teams AS t ' +
-                      'INNER JOIN sessions AS s ON s.team_id = t.id ' +
-                      'WHERE s.token = ?')
+  auth: db.prepare('SELECT t.name AS team_name, t.id AS team_id, t.score AS team_score ' +
+                   'FROM teams AS t ' +
+                   'INNER JOIN sessions AS s ON s.team_id = t.id ' +
+                   'WHERE s.token = ?'),
+  updateScore: db.prepare('UPDATE teams SET score = (score + ?) WHERE id = ?')
 };
 
 Team.auth = function(sessionToken, onValid, onInvalid) {
@@ -34,4 +36,8 @@ Team.auth = function(sessionToken, onValid, onInvalid) {
         onValid(row);
     }
   });
+};
+
+Team.updateScore = function(teamId, delta) {
+  Team._queries.updateScore.run(delta, teamId, errHandler);
 };

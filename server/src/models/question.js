@@ -1,5 +1,6 @@
 var config = require('../config');
-var db = require('./index').db;
+var models = require('./index');
+var db = models.db;
 var fs = require('fs');
 
 var Question = function() {
@@ -68,8 +69,8 @@ Question.answer = function(questionId, answerId, teamId, onCorrect, onIncorrect)
     if(typeof row === 'undefined') {
       onIncorrect();
     } else {
-      console.log(row);
       onCorrect();
+      models.Team.updateScore(teamId, row.points);
     }
   });
 };
