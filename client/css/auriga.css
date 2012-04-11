@@ -21,3 +21,23 @@ form.create-team > fieldset {
 .carousel .item {
   min-height: 300px;
 }
+
+.notification {
+  position: fixed;
+  border-radius: 12px;
+  z-index: 999;
+  padding: 0.6em 0.3em 0.6em 0.5em;
+  border-width: 3px;
+  border-style: solid;
+  font-weight: bold;
+}
+
+.notification.success {
+  background-color: #a8d081;
+  border-color: #647c4d;
+}
+
+.notification.failure {
+  border-color: #7c4d4d;
+  background-color: #d08181;
+}

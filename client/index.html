@@ -40,7 +40,10 @@
     </div>
 
     <div class="container">
-      <div class="row">
+      <div class="row" id="notifications">
+      </div>
+
+      <div class="row" id="primaryContent">
         <div id="primaryCarousel" class="carousel span8">
           <div class="carousel-inner">
             <!--<div class="scoreboard item">
@@ -133,6 +136,13 @@
     <script type="text/template" id="all-questions-answered-template">
       <div class="item">
         You are finished! Hooray!
+      </div>
+    </script>
+
+    <script type="text/template" id="notification-template">
+      <div class="notification fade in offset8 span4 <%= additionalClasses %>">
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+        <%= msg %>
       </div>
     </script>
 

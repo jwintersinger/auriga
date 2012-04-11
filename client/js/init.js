@@ -1,5 +1,8 @@
 var ejs = require('ejs');
 
+/*====
+  Util
+  ====*/
 Util = {
   executeNowAndPeriodically: function(func, period) {
     func();
@@ -7,8 +10,50 @@ Util = {
   }
 };
 
+
+/*========
+  Notifier
+  ========*/
+function Notifier(container) {
+  this._container = $(container);
+  this._autoCloseDelay = 3000;
+  this._fadeInDuration = 500;
+}
+
+Notifier.prototype.notify = function(msg, additionalClasses) {
+  var tmpl = $('#notification-template').html();
+  var compiled = ejs.render(tmpl, {
+    msg: msg,
+    additionalClasses: additionalClasses.join(' ')
+  });
+  var compiled = $(compiled);
+  compiled.hide();
+  this._container.append(compiled);
+  compiled.fadeIn(this._fadeInDuration);
+
+  setTimeout(function() {
+    // Simulate click rather than triggering 'close' event to get fancy
+    // fade-out effect.
+    compiled.find('.close').click();
+  }, this._autoCloseDelay);
+};
+
+Notifier.prototype.success = function(msg) {
+  return this.notify(msg, ['success']);
+};
+
+Notifier.prototype.failure = function(msg) {
+  return this.notify(msg, ['failure']);
+};
+
+
+/*==============
+  QuestionLoader
+  ==============*/
 function QuestionLoader(carousel) {
   this._carousel = carousel;
+  this._notifier = new Notifier('#notifications');
+
   this._carousel.carousel({
     interval: 6*3600*1000 // 6 hours -- ugly hack.
   });
@@ -58,6 +103,10 @@ QuestionLoader.prototype._configureAnswerSubmission = function() {
       type: 'POST',
       data: form.serialize()
     }).done(function(response) {
+      if(response.status === 'correct')
+        self._notifier.success('Good show, mate!');
+      else if(response.status === 'incorrect')
+        self._notifier.failure('Oh, dear.');
     });
     self._advanceToNextQuestion();
   });
@@ -94,6 +143,7 @@ QuestionLoader.prototype._advanceToNextQuestion = function() {
   this._carousel.find('.carousel-inner').append(compiled);
   this._carousel.carousel('next');
 }
+
 
 $(function() {
   var carousel = $('.carousel');

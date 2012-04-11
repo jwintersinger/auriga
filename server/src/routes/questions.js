@@ -7,7 +7,7 @@ exports.listQuestions = function(req, res) {
 };
 
 exports.answerQuestion = function(req, res) {
-  res.json({});
+  res.json({ status: 'incorrect' });
 };
 
 exports.loadQuestions = function(req, res) {
