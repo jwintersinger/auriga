@@ -20,7 +20,7 @@ Question._deleteAll = function() {
 };
 
 Question.list = function(onResult) {
-  Question._queries.list.all(function(err, rows) {
+  Question._queries.listQuestions.all(function(err, rows) {
     errHandler(err);
 
     var questions = {};
@@ -82,19 +82,27 @@ Question.answer = function(questionId, answerId, teamId, onCorrect, onIncorrect,
 };
 
 Question._queries = {
-  list: db.prepare('SELECT q.*, a.id AS answer_id, a.body AS answer_body ' +
-                   'FROM questions AS q ' +
-                   'INNER JOIN answers AS a ON a.question_id = q.id'),
+  listQuestions: db.prepare(
+    'SELECT q.*, a.id AS answer_id, a.body AS answer_body ' +
+    'FROM questions AS q ' +
+    'INNER JOIN answers AS a ON a.question_id = q.id'
+  ),
   insertQuestion: db.prepare('INSERT INTO questions (body, points) VALUES (?, ?)'),
   insertAnswer: db.prepare('INSERT INTO answers (question_id, body, correct) VALUES (?, ?, ?)'),
   deleteQuestions: db.prepare('DELETE FROM questions'),
   deleteAnswers: db.prepare('DELETE FROM answers'),
   deleteAnsweredQuestions: db.prepare('DELETE FROM answered_questions'),
-  testAnswer: db.prepare('SELECT q.points FROM answers AS a ' +
-                         'INNER JOIN questions AS q ON q.id == ? ' +
-                         'WHERE a.id == ? AND a.question_id == ? AND a.correct == 1'),
-  markQuestionAsAnswered: db.prepare('INSERT INTO answered_questions (question_id, team_id) ' +
-                                     'VALUES (?, ?)'),
-  determineIfAlreadyAnswered: db.prepare('SELECT question_id FROM answered_questions ' +
-                                         'WHERE question_id == ? AND team_id == ?')
+  testAnswer: db.prepare(
+    'SELECT q.points FROM answers AS a ' +
+    'INNER JOIN questions AS q ON q.id == ? ' +
+    'WHERE a.id == ? AND a.question_id == ? AND a.correct == 1'
+  ),
+  markQuestionAsAnswered: db.prepare(
+    'INSERT INTO answered_questions (question_id, team_id) ' +
+    'VALUES (?, ?)'
+  ),
+  determineIfAlreadyAnswered: db.prepare(
+    'SELECT question_id FROM answered_questions ' +
+    'WHERE question_id == ? AND team_id == ?'
+  )
 };
