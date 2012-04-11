@@ -13,7 +13,7 @@ function QuestionLoader(carousel) {
     interval: 6*3600*1000 // 6 hours -- ugly hack.
   });
   this._configureTeamCreation();
-  this._configureQuestionSubmission();
+  this._configureAnswerSubmission();
 
   this._loadQuestions();
 }
@@ -46,10 +46,19 @@ QuestionLoader.prototype._configureTeamCreation = function() {
   });
 }
 
-QuestionLoader.prototype._configureQuestionSubmission = function() {
+QuestionLoader.prototype._configureAnswerSubmission = function() {
   var self = this;
   $(document).on('submit', '#primaryCarousel .question form', function(evt) {
     evt.preventDefault();
+
+    var form = $(this);
+    var questionId = form.find('[name=question_id]').val();
+    $.ajax({
+      url: '/questions/' + questionId,
+      type: 'POST',
+      data: form.serialize()
+    }).done(function(response) {
+    });
     self._advanceToNextQuestion();
   });
 };
