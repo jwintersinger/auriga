@@ -1,0 +1,28 @@
+<script type="text/template" id="scoreboard-template">
+  <div class="row span8">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>Score</th>
+          <th>Questions answered</th>
+          <th>Last question answered</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% teams.forEach(function(team, idx) { %>
+        <tr>
+          <td><%= idx + 1 %></td>
+          <td><%= team.name %></td>
+          <td><%= team.score %></td>
+          <td><%= team.questionsAnswered %></td>
+          <td><%= team.timeSinceLastAnswer %></td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
+  </div>
+</script>
+
+<script src="js/scoreboard.js"></script>

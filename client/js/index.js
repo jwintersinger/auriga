@@ -1,16 +1,5 @@
 var ejs = require('ejs');
 
-/*====
-  Util
-  ====*/
-Util = {
-  executeNowAndPeriodically: function(func, period) {
-    func();
-    setInterval(func, period);
-  }
-};
-
-
 /*========
   Notifier
   ========*/

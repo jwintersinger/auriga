@@ -46,6 +46,7 @@ app.get('/stats', routes.listStats);
 app.post('/team', routes.createTeam);
 
 app.get('/scoreboard', routes.showScoreboard);
+app.get('/scoreboard.json', routes.listScoreboard);
 
 app.get('/', routes.index);
 

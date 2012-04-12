@@ -19,7 +19,10 @@ Scoreboard.listScores = function(onResult) {
 
 Scoreboard._queries = {
   listScores: db.prepare(
-    'SELECT t.* FROM teams AS t ' +
-    'ORDER BY t.score'
+    'SELECT t.*, COUNT(aq.team_id) AS questionsAnswered ' +
+    'FROM teams AS t ' +
+    'INNER JOIN answered_questions AS aq ON aq.team_id = t.id ' +
+    'GROUP BY t.id ' +
+    'ORDER BY t.score DESC'
   )
 };
