@@ -36,6 +36,8 @@ app.post('/questions/:id([0-9]+)', routes.answerQuestion);
 app.get('/stats', routes.listStats);
 app.post('/team', routes.createTeam);
 
+app.get('/scoreboard', routes.showScoreboard);
+
 // This route isn't strictly necessary, as Express' static-file-handling code
 // seems to automaticaly serve a static file named index.html if no "root"
 // route is provided. Nevertheless, I feel more comfortable making this
