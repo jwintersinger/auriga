@@ -13,5 +13,11 @@ Util = {
       timeAgo += mins + ' min' + (mins === 1 ? ' ' : 's ');
     timeAgo += (secondsAgo % 60) + ' s';
     return timeAgo;
+  },
+
+  sortRandomly: function(arr) {
+    arr.sort(function() {
+      return Math.random() - 0.5;
+    });
   }
 };

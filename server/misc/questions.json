@@ -108,7 +108,7 @@
   },
 
   {
-    "body": "Congratulations for having made it this far. Here is one question from us, on the house. GPCRs can amplify a signal to rapidly trigger a response within a cell. In some cases, the secondary messenger they produced can be used in numerous other pathways. In the case of cAMP, aside from mobilising glucose, it may also participate in the activation of other pathways, such as opening calcium channels. This is an example of:",
+    "body": "GPCRs can amplify a signal to rapidly trigger a response within a cell. In some cases, the secondary messenger they produced can be used in numerous other pathways. In the case of cAMP, aside from mobilising glucose, it may also participate in the activation of other pathways, such as opening calcium channels. This is an example of:",
     "points": 100,
     "answers": [
       { "correct": true, "body": "Divergent signalling" },
@@ -149,7 +149,7 @@
   },
 
   {
-    "body": "That last question was almost too easy; let's step things up. Owing to their complexity, it has been very difficult to determine the structures of GPCRs by the X-Ray crystallography. More recently, advances have allowed numerous GPCRs to have their structures determined. Before these advances, rhodopsin was the only GPCR to have its structure determined. Why is this?",
+    "body": "Owing to their complexity, it has been very difficult to determine the structures of GPCRs via x-ray crystallography. More recently, advances have allowed numerous GPCRs to have their structures determined. Before these advances, rhodopsin was the only GPCR to have its structure determined. Why is this?",
     "points": 100,
     "answers": [
       { "correct": false, "body": "The protein had a larger structure, making it easier to detect" },

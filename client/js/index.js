@@ -98,6 +98,7 @@ QuestionLoader.prototype._loadQuestions = function() {
     url: '/questions',
     type: 'GET'
   }).done(function(questions) {
+    Util.sortRandomly(questions);
     self._questions = questions;
   });
 };
