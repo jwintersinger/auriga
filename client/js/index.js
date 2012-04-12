@@ -191,7 +191,8 @@ QuestionLoader.prototype._advanceToNextQuestion = function() {
     var compiled = $('#all-questions-answered-template').html();
   }
 
-  this._carousel.find('.carousel-inner').append(compiled);
+  var carouselInner = this._carousel.find('.carousel-inner');
+  carouselInner.append(compiled);
   this._carousel.carousel('next');
 }
 
