@@ -78,9 +78,14 @@ QuestionLoader.prototype._checkForExistingTeam = function(onUserStaysOnSameTeam)
     stayOnTeam.click(function() {
       onUserStaysOnSameTeam();
       dialog.modal('hide');
+      // If button not removed from DOM, provided that user gave focus to it
+      // before hitting enter, he can continue hitting enter to repeatedly
+      // trigger the button.
+      $(this).remove();
     });
     changeTeam.click(function() {
       dialog.modal('hide');
+      $(this).remove();
     });
     dialog.modal('show');
     stayOnTeam.focus();
