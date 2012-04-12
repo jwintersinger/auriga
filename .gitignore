@@ -1,2 +1,3 @@
 server/misc/database.sqlite*
+server/node_modules/
 .*.swp
