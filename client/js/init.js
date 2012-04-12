@@ -72,7 +72,7 @@ QuestionLoader.prototype._onTeamChanged = function() {
 
 QuestionLoader.prototype._checkForExistingTeam = function(onUserStaysOnSameTeam) {
   // User hasn't previously joined team.
-  if(document.cookie.indexOf('sessionToken') === -1)
+  if(document.cookie.indexOf('session_token') === -1)
     return;
 
   this._getStats(function(stats) {
