@@ -3,6 +3,7 @@ var config = require('./config');
 var routes = require('./routes');
 var app = module.exports = express.createServer();
 
+
 /*=============
   Configuration
   =============*/
@@ -15,6 +16,14 @@ app.configure(function() {
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(config.staticDocPath, { maxAge: config.staticDocMaxAge }));
+
+  // Use non-standard opening and closing tags to allow ejs templates using the
+  // standard tags to be embedded in the HTML for client-side use without being
+  // interpeted by the server.
+  app.set('view options', {
+    open: '{{',
+    close: '}}'
+  });
 });
 
 app.configure('development', function(){
@@ -38,10 +47,6 @@ app.post('/team', routes.createTeam);
 
 app.get('/scoreboard', routes.showScoreboard);
 
-// This route isn't strictly necessary, as Express' static-file-handling code
-// seems to automaticaly serve a static file named index.html if no "root"
-// route is provided. Nevertheless, I feel more comfortable making this
-// behaviour explicit.
 app.get('/', routes.index);
 
 

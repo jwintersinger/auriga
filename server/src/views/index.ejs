@@ -1,0 +1,109 @@
+<div class="row" id="notifications">
+</div>
+
+<div class="row" id="primaryContent">
+  <div id="primaryCarousel" class="carousel span8">
+    <div class="carousel-inner">
+      <div class="team-entry item active">
+        <h1>Team creation</h1>
+        <hr />
+
+        <form class="form-vertical create-team">
+          <fieldset>
+            <legend>What is your team name?</legend>
+
+            <div class="control-group">
+              <div class="controls">
+                <input type="text" class="input-xlarge" placeholder="Team name" name="teamName" />
+              </div>
+            </div>
+
+            <div class="control-group">
+              <button type="submit" class="btn btn-primary">Create team</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="quiz-stats" class="span4">
+  </div>
+</div>
+</div> <!-- /container -->
+
+<div class="modal" id="changeTeamPrompt" data-backdrop="static">
+<div class="modal-header">
+  <a class="close" data-dismiss="modal">×</a>
+  <h3>Change team?</h3>
+</div>
+<div class="modal-body">
+  <p>You are already a member of team <span class="teamName"></span>. Do you wish to remain on it?</p>
+</div>
+<div class="modal-footer">
+  <a href="#" class="btn change-team">Change teams</a>
+  <a href="#" class="btn btn-primary stay-on-team">Stay on this team</a>
+</div>
+
+<script type="text/template" id="quiz-stats-template">
+  <dl>
+    <dt>Team</dt><dd><%= team_name %></dd>
+    <dt>Rank</dt><dd>2/15</dd>
+    <dt>Progress</dt><dd>17/30</dd>
+    <dt>Score</dt><dd><%= team_score %></dd>
+  </dl>
+</script>
+
+<script type="text/template" id="quiz-question-template">
+  <div class="question item">
+    <h1>Question</h1>
+    <hr />
+
+    <form class="form-vertical">
+      <fieldset>
+        <legend><%= body %></legend>
+
+        <!--<div class="control-group">
+          <label class="control-label">Question</label>
+          <div class="controls">
+            <p class="helpblock">Why are my pants so awesome?</p>
+          </div>
+        </div>-->
+
+        <div class="control-group">
+          <!--<label class="control-label" for="answer1">Answers</label>-->
+          <div class="controls">
+          <% answers.forEach(function(answer) { %>
+            <label class="radio">
+              <input type="radio" name="answer_id" value="<%= answer.id %>" />
+              <%= answer.body %>
+            </label>
+          <% }) %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <button type="submit" class="btn btn-primary">Submit answer</button>
+        </div>
+      </fieldset>
+
+      <input type="hidden" name="question_id" value="<%= id %>" />
+    </form>
+  </div>
+</script>
+
+<script type="text/template" id="all-questions-answered-template">
+  <div class="item">
+    You are finished! Hooray!
+  </div>
+</script>
+
+<script type="text/template" id="notification-template">
+  <div class="notification fade in offset8 span4 <%= additionalClasses %>">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <%= msg %>
+  </div>
+</script>
+
+<script src="js/init.js"></script>
