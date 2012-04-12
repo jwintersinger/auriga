@@ -6,15 +6,8 @@
   margin-top: 0.7em;
 }
 
-form.create-team {
-  /*overflow: hidden;
-  background-color: #eee;*/
-}
-
-form.create-team > fieldset {
-}
-
-.carousel .item {
+.carousel-inner {
+  min-height: 40em;
 }
 
 .notification {
