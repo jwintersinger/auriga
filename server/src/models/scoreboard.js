@@ -24,6 +24,6 @@ Scoreboard._queries = {
     'FROM teams AS t ' +
     'LEFT OUTER JOIN answered_questions AS aq ON aq.team_id = t.id ' +
     'GROUP BY t.id ' +
-    'ORDER BY t.score DESC'
+    'ORDER BY t.score DESC, timeSinceLastAnswer'
   )
 };

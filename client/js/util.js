@@ -10,7 +10,7 @@ Util = {
     var timeAgo = '';
     var mins = Math.floor(secondsAgo / 60);
     if(mins > 0)
-      timeAgo += mins + ' mins ';
+      timeAgo += mins + ' min' + (mins === 1 ? ' ' : 's ');
     timeAgo += (secondsAgo % 60) + ' s';
     return timeAgo;
   }
