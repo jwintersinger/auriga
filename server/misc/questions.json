@@ -1,35 +1,203 @@
 [
   {
-    "body": "Why are bonners huge?",
-    "points": 200,
+    "body": "Following ligand binding, the G protein receptor undergoes a conformational change. This conformation change increases the receptor's affinity for which of the following?",
+    "points": 100,
     "answers": [
-      {
-        "correct": true,
-        "body": "Roffles for everyone"
-      },
-      {
-        "correct": false,
-        "body": "Bananas for my loyal disciples"
-      }
+      { "correct": false, "body": "G protein dimer" },
+      { "correct": false, "body": "G protein monomer" },
+      { "correct": false, "body": "G protein tetramer" },
+      { "correct": true, "body": "G protein trimer" }
     ]
   },
 
   {
-    "body": "What do you wear on your feet?",
-    "points": 400,
+    "body": "Both epinephrine and glucagon bind to G protein-coupled receptors and activate glycogen breakdown. Therefore, epinephrine and glucagon must:",
+    "points": 100,
     "answers": [
-      {
-        "correct": false,
-        "body": "Sandals"
-      },
-      {
-        "correct": false,
-        "body": "Socks"
-      },
-      {
-        "correct": true,
-        "body": "Bananas"
-      }
+      { "correct": false, "body": "have very similar structures and bind to the same receptor." },
+      { "correct": true, "body": "bind to receptors with different ligand-binding sites but similar functions." },
+      { "correct": false, "body": "bind to different receptors and activate different second messengers." },
+      { "correct" : false, "body": "bind to the same receptors, one being intracellular and the other, extracellular." }
+    ]
+  },
+
+  {
+    "body": "Glucagon binds to the glucagon receptor, which interacts with a membrane-bound G protein, whose α subunit releases GDP and binds GTP. The α subunit then dissociates from the G protein and diffuses to a membrane-bound adenylyl cyclase which produces cAMP. In this scenario, name the (1) transducer, (2) effector, (3) first messenger, and (4) second messenger.",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "(1) glucagon (2) cAMP (3) G protein (4) GTP" },
+      { "correct": true, "body": "(1) G protein (2) adenylyl cyclase (3) glucagon (4) cAMP" },
+      { "correct": false, "body": "(1) G protein (2) GTP (3) glucagon (4) cAMP" },
+      { "correct": false, "body": "(1) glucagon (2) G protein (3) adenylyl cyclase (4) cAMP" }
+    ]
+  },
+
+  {
+    "body": "G proteins are said to be self-inactivating. What G-protein function accounts for this?",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "GTPase activity of the α subunit" },
+      { "correct": false, "body": "activation of the effector" },
+      { "correct": false, "body": "binding to the receptor" },
+      { "correct": false, "body": "dissociation of the subunits" }
+    ]
+  },
+
+  {
+    "body": "People who suffer from thyroid adenomas have constitutively activated G proteins in some cells of the thyroid gland. Tumor cells not only secrete copious quantities of thyroid hormones but also divide and grow excessively. Based on these observations, in what kind(s) of signal transduction pathways do the mutant G proteins participate?",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "cAMP-regulated pathways" },
+      { "correct": false, "body": "MAP kinase pathways" },
+      { "correct": false, "body": "both cAMP and MAP kinase pathways" },
+      { "correct": false, "body": "neither cAMP nor MAP kinase pathways" }
+    ]
+  },
+
+  {
+    "body": "What factors are responsible for the specificity of G protein-coupled responses?",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "Protein kinases can phosphorylate different proteins in different cells." },
+      { "correct": false, "body": "Receptors can exist as isoforms." },
+      { "correct": false, "body": "G-protein subunits can exist as isoforms." },
+      { "correct": true, "body": "All of these are correct." }
+    ]
+  },
+
+  {
+    "body": "True or false:  A G protein unable to hydrolyze GTP would be expected to continue to send stimulatory signals downstream, leading to a constitutively active adenylyl cyclase.",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "True" },
+      { "correct": false, "body": "False" }
+    ]
+  },
+
+  {
+    "body": "GPCRs participate in a diverse range of functions. The binding of a ligand is central in all of these pathways. Which of the following occurs immediately in the trimeric G-protein after a ligand has bound to the G-protein receptor?",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "Dissociation" },
+      { "correct": false, "body": "State change" },
+      { "correct": false, "body": "GEF activity exchanges GDP for GTP" },
+      { "correct": true, "body": "Conformation change" }
+    ]
+  },
+
+  {
+    "body": "Research has found that, when deregulated, cAMP may be implicated in cancer. Which of the following treatment options below are probably the most viable in handling this particular deregulation?",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "Aerobic glycolysis inhibitors" },
+      { "correct": false, "body": "CDK inhibitors" },
+      { "correct": false, "body": "Telomerase inhibitors" },
+      { "correct": false, "body": "VEGF signalling inhibitors" }
+    ]
+  },
+
+  {
+    "body": "Arrestins are a small class of proteins that trigger the _____ of a GPCR. In order for this to occur, the G-receptor must be  _____ by _____.",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "Endocytosis, acetylation, PKA" },
+      { "correct": true, "body": "Endocytosis, phosphorylation, GRK" },
+      { "correct": false, "body": "Exocytosis, acetylation, PKA" },
+      { "correct": false, "body": "Exocytosis, phosphorylation, GRK" }
+    ]
+  },
+
+  {
+    "body": "Congratulations for having made it this far. Here is one question from us, on the house. GPCRs can amplify a signal to rapidly trigger a response within a cell. In some cases, the secondary messenger they produced can be used in numerous other pathways. In the case of cAMP, aside from mobilising glucose, it may also participate in the activation of other pathways, such as opening calcium channels. This is an example of:",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "Divergent signalling" },
+      { "correct": false, "body": "Convergent signalling" },
+      { "correct": false, "body": "Cross-talk" }
+    ]
+  },
+
+  {
+    "body": "Why is the activation of second messengers like cAMP considered to be an amplifying step in signal transduction?",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "Second messengers are not as specific as primary messengers and may bind to a diverse range of proteins that go on to activate other pathways" },
+      { "correct": false, "body": "Second messengers may recruit additional proteins to the signalling site" },
+      { "correct": false, "body": "Second messengers are produced by multiple effectors; all of these can be activated by a single receptor should a ligand bind to it." },
+      { "correct": false, "body": "None of the above" }
+    ]
+  },
+
+  {
+    "body": "True or false: GPCRs also participate in sensory cells, such as the rods within the retina. Photons trigger a conformational change in the rhodopsin and transmits the signal to transducin, the effector. When activated, cGMP is produced and subsequently triggers a release of sodium ions to generate an action potential. Individuals with a mutation in rhodopsin will likely have severe visual impairment.",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "True" },
+      { "correct": false, "body": "False" }
+    ]
+  },
+
+  {
+    "body": "The G-protein receptor consists of nine subunits.",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "False: seven subnits" },
+      { "correct": false, "body": "False: eight subunits" },
+      { "correct": false, "body": "True" },
+      { "correct": false, "body": "False: ten subunits" }
+    ]
+  },
+
+  {
+    "body": "That last question was almost too easy; let's step things up. Owing to their complexity, it has been very difficult to determine the structures of GPCRs by the X-Ray crystallography. More recently, advances have allowed numerous GPCRs to have their structures determined. Before these advances, rhodopsin was the only GPCR to have its structure determined. Why is this?",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "The protein had a larger structure, making it easier to detect" },
+      { "correct": false, "body": "The protein occurs in the body at a higher frequency, making it easier to isolate" },
+      { "correct": false, "body": "The entire sequence of the rhodopsin protein is known, thanks to your friendly bioinformaticians, allowing its structure to be derived using online tools like PDB" },
+      { "correct": true, "body": "The protein is highly stable because of its binding to its ligand, and is only able to undergo a conformational change when photons are present." }
+    ]
+  },
+
+  {
+    "body": "Heterotrimeric G-proteins are tethered to the membrane via lipid anchors. Both the alpha and gamma subunits have covalent lipid modifications. True or false: In the active state, the alpha subunit binds GDP and is a GTPase.",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "True" },
+      { "correct": true, "body": "False" }
+    ]
+  },
+
+  {
+    "body": "After a G-protein α subunit activates its target protein, it shuts itself off by:",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "hydrolyzing its bound GTP to GDP" },
+      { "correct": false, "body": "trans auto-phosphorylation" },
+      { "correct": false, "body": "integrin deactivation" },
+      { "correct": false, "body": "Ubiquitination of the α subunit" }
+    ]
+  },
+
+  {
+    "body": "G proteins are usually active for very short periods of time (seconds). Alpha subunits have intrinsically weak GTPase activity, and on their own would take minutes to hydrolyze their GTP. Which of the following, enhance the alpha subunit’s  GTPase activity when bound to it?",
+    "points": 100,
+    "answers": [
+      { "correct": false, "body": "Wee1" },
+      { "correct": false, "body": "G-arrest proteins (GAPs)" },
+      { "correct": false, "body": "Securin" },
+      { "correct": true, "body": "GTPase activating proteins (GAPs)" }
+    ]
+  },
+
+  {
+    "body": "If you choose an answer to this question at random, what is the chance you will be correct?",
+    "points": 100,
+    "answers": [
+      { "correct": true, "body": "25%" },
+      { "correct": true, "body": "50%" },
+      { "correct": true, "body": "60%" },
+      { "correct": true, "body": "25%" }
     ]
   }
 ]
