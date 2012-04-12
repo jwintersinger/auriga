@@ -4,7 +4,19 @@
 <div class="row" id="primaryContent">
   <div id="primaryCarousel" class="carousel span8">
     <div class="carousel-inner">
-      <div class="team-entry item active">
+      <div class="item active">
+        <div class="span3 destination-chooser" id="view-tutorial">
+          <a href="/tutorial"><img src="/img/view_tutorial_icon.png" alt="View tutorial" width="128" height="128" /></a><br />
+          <a class="btn btn-primary" href="/tutorial">View tutorial</a>
+        </div>
+
+        <div class="span3 destination-chooser" id="complete-quiz">
+          <img src="/img/complete_quiz_icon.png" alt="Complete quiz" width="128" height="128" /><br />
+          <button type="submit" class="btn btn-primary">Complete quiz</button>
+        </div>
+      </div>
+
+      <div class="team-entry item">
         <h1>Team creation</h1>
         <hr />
 
@@ -95,8 +107,8 @@
 
 <script type="text/template" id="all-questions-answered-template">
   <div class="item">
-    <h2>All done!</h2>
-    <p>Jolly good show, old chap, jolly good show!</p>
+    <h2>All done! Hooray!</h2>
+    <p>Jolly good show, old chap, jolly good show! Would you care perhaps to <a href="/scoreboard">view the scoreboard</a>?</p>
   </div>
 </script>
 

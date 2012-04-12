@@ -37,3 +37,11 @@
 #changeTeamPrompt .teamName {
   font-weight: bold;
 }
+
+.destination-chooser {
+  text-align: center;
+}
+
+.destination-chooser .btn {
+  margin-top: 1em;
+}

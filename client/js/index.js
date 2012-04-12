@@ -205,5 +205,9 @@ QuestionLoader.prototype._advanceToNextQuestion = function() {
 
 $(function() {
   var carousel = $('.carousel');
-  var ql = new QuestionLoader(carousel);
+
+  $('#complete-quiz > *').click(function() {
+    var ql = new QuestionLoader(carousel);
+    carousel.carousel('next');
+  }).css('cursor', 'pointer');
 });
