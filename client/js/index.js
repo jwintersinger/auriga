@@ -54,11 +54,15 @@ function QuestionLoader(carousel) {
 }
 
 QuestionLoader.prototype._onTeamChanged = function() {
-  this._loadQuestions();
-  this._configureStatsUpdater();
-  this._advanceToNextQuestion();
+  var self = this;
+  this._loadQuestions(function() {
+    self._configureStatsUpdater();
+    self._advanceToNextQuestion();
+  });
 };
 
+// If user is already on a team, ask him whether he wants to remain on the same
+// team or create a new one.
 QuestionLoader.prototype._checkForExistingTeam = function(onUserStaysOnSameTeam) {
   // User hasn't previously joined team.
   if(document.cookie.indexOf('session_token') === -1)
@@ -92,7 +96,7 @@ QuestionLoader.prototype._checkForExistingTeam = function(onUserStaysOnSameTeam)
   });
 };
 
-QuestionLoader.prototype._loadQuestions = function() {
+QuestionLoader.prototype._loadQuestions = function(onQuestionsLoaded) {
   var self = this;
   $.ajax({
     url: '/questions',
@@ -100,6 +104,7 @@ QuestionLoader.prototype._loadQuestions = function() {
   }).done(function(questions) {
     Util.sortRandomly(questions);
     self._questions = questions;
+    onQuestionsLoaded();
   });
 };
 
@@ -181,14 +186,6 @@ QuestionLoader.prototype._updateQuizStats = function() {
 }
 
 QuestionLoader.prototype._advanceToNextQuestion = function() {
-  var self = this;
-  if(typeof self._questions === 'undefined') {
-    setTimeout(function() {
-      self._advanceToNextQuestion();
-    }, 1);
-    return;
-  }
-
   if(this._questions.length > 0) {
     var question = this._questions.shift();
     var tmpl = $('#quiz-question-template').html();
