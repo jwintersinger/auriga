@@ -100,8 +100,8 @@ Question._queries = {
     'WHERE a.id = ? AND a.question_id = ? AND a.correct = 1'
   ),
   markQuestionAsAnswered: db.prepare(
-    'INSERT INTO answered_questions (question_id, team_id) ' +
-    'VALUES (?, ?)'
+    'INSERT INTO answered_questions (question_id, team_id, created_at) ' +
+    "VALUES (?, ?, strftime('%s', 'now'))"
   ),
   determineIfAlreadyAnswered: db.prepare(
     'SELECT question_id FROM answered_questions ' +

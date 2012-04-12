@@ -19,9 +19,10 @@ Scoreboard.listScores = function(onResult) {
 
 Scoreboard._queries = {
   listScores: db.prepare(
-    'SELECT t.*, COUNT(aq.team_id) AS questionsAnswered ' +
+    'SELECT t.*, COUNT(aq.team_id) AS questionsAnswered, ' +
+      "(strftime('%s', 'now') - MAX(aq.created_at)) AS timeSinceLastAnswer " +
     'FROM teams AS t ' +
-    'INNER JOIN answered_questions AS aq ON aq.team_id = t.id ' +
+    'LEFT OUTER JOIN answered_questions AS aq ON aq.team_id = t.id ' +
     'GROUP BY t.id ' +
     'ORDER BY t.score DESC'
   )

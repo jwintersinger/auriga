@@ -1,5 +1,7 @@
 <script type="text/template" id="scoreboard-template">
   <div class="row span8">
+    <h2>Scoreboard</h2>
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -17,7 +19,7 @@
           <td><%= team.name %></td>
           <td><%= team.score %></td>
           <td><%= team.questionsAnswered %></td>
-          <td><%= team.timeSinceLastAnswer %></td>
+          <td><%- Util.timeAgoInWords(team.timeSinceLastAnswer) %></td>
         </tr>
       <% }) %>
       </tbody>

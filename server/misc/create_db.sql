@@ -1,6 +1,7 @@
 CREATE TABLE answered_questions (
   question_id INTEGER NOT NULL,
-  team_id INTEGER NOT NULL
+  team_id INTEGER NOT NULL,
+  created_at INTEGER NOT NULL
 );
 
 CREATE TABLE answers (
